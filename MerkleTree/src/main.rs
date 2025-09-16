@@ -4,3 +4,9 @@ fn gen_hash(data: &str) -> String {
     let result = Sha256::digest(data.as_bytes());
     hex::encode(result)
 }
+
+struct MerkleTree {
+    root: String,
+    leaves: Vec<string>,
+    
+}
