@@ -23,18 +23,18 @@ impl MerkleTree {
 
         //assuming data.len() is power of 2
         while cur_level.len() > 1 {
-            let mut next_level = Vec::new();
+            let mut new_level = Vec::new();
             for i in (0..cur_level.len()).step_by(2) {
                 let first = &cur_level[i];
                 let second = &cur_level[i + 1];
                 let both = [first.as_slice(), second.as_slice()].concat();
                 let new_hash = gen_hash(&both);
-                next_level.push(new_hash);
+                new_level.push(new_hash);
             }
-            cur_level = next_level;
+            cur_level = new_level;
             levels.push(new_level.clone());
         }
-        root = gen_hash(cur_level[0].clone());
+        root = cur_level[0].clone();
         
         Self { leaves, levels, root }
     }
