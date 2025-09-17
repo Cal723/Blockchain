@@ -1,8 +1,6 @@
-fn gen_hash(data: &str) -> String {
-    use hex_literal::hex;
-    use sha2::{Sha256, Digest};
-    let result = Sha256::digest(data.as_bytes());
-    hex::encode(result)
+fn gen_hash(data: &[u8]) -> Vec<u8> {
+    let result = Sha256::digest(data);
+    result.to_vec() 
 }
 
 struct MerkleTree {
@@ -15,14 +13,11 @@ impl MerkleTree {
         let mut leaves = Vec::new();
         let mut levels = Vec::new();
         for item in data {
-            let leaves: Vec<Vec<u8>> = item.as_bytes().to_vec();
-            let hash = gen_hash(item);
-            leaves.push(hash.into_bytes());
+            let hash = gen_hash(item.as_bytes());
+            leaves.push(hash); 
         }
-
         levels.push(leaves.clone());
         Self { leaves, levels }
     }
 
-    
 }
