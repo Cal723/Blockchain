@@ -23,4 +23,6 @@ impl MerkleTree {
         levels.push(leaves.clone());
         Self { leaves, levels }
     }
+
+    
 }
