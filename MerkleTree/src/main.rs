@@ -6,6 +6,7 @@ fn gen_hash(data: &[u8]) -> Vec<u8> {
 struct MerkleTree {
     pub leaves: Vec<Vec<u8>>,
     pub levels: Vec<Vec<Vec<u8>>>,
+    pub root: Vec<u8>,
 }
 
 impl MerkleTree {
@@ -24,18 +25,18 @@ impl MerkleTree {
         while cur_level.len() > 1 {
             let mut next_level = Vec::new();
             for i in (0..cur_level.len()).step_by(2) {
-                let left = &cur_level[i];
-                let right = &cur_level[i + 1];
-                let both = [left.as_slice(), right.as_slice()].concat();
+                let first = &cur_level[i];
+                let second = &cur_level[i + 1];
+                let both = [first.as_slice(), second.as_slice()].concat();
                 let new_hash = gen_hash(&both);
                 next_level.push(new_hash);
-                
             }
+            cur_level = next_level;
+            levels.push(new_level.clone());
         }
-
-
-
-        Self { leaves, levels }
+        root = gen_hash(cur_level[0].clone());
+        
+        Self { leaves, levels, root }
     }
 
 }
