@@ -6,7 +6,21 @@ fn gen_hash(data: &str) -> String {
 }
 
 struct MerkleTree {
-    root: String,
-    leaves: Vec<string>,
-    
+    pub leaves: Vec<Vec<u8>>,
+    pub levels: Vec<Vec<Vec<u8>>>,
+}
+
+impl MerkleTree {
+    fn new(data: Vec<&str>) -> Self {
+        let mut leaves = Vec::new();
+        let mut levels = Vec::new();
+        for item in data {
+            let leaves: Vec<Vec<u8>> = item.as_bytes().to_vec();
+            let hash = gen_hash(item);
+            leaves.push(hash.into_bytes());
+        }
+
+        levels.push(leaves.clone());
+        Self { leaves, levels }
+    }
 }
