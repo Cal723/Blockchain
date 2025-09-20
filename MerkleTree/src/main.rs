@@ -3,6 +3,7 @@ fn gen_hash(data: &[u8]) -> Vec<u8> {
     result.to_vec() 
 }
 
+//Merkle Struct
 struct MerkleTree {
     pub leaves: Vec<Vec<u8>>,
     pub levels: Vec<Vec<Vec<u8>>>,
